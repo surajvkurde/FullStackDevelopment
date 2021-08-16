@@ -1,0 +1,55 @@
+/*We define a parent digit of an integer x using the following rules: Given an integer, 
+we need to find the parent digit of the integer. 
+• If x has only 1 digit, then its parent digit is x. 
+• Otherwise, the parent digit of x is equal to the parent digit of the sum of the digits of x 
+The number p is created by concatenating the string n, k times. 
+n = “567” k=3 p=567567567
+*/
+
+
+import java.io.*;
+import java.util.*;
+
+public class Solution {
+    
+    static String parent_digit(String n)
+    {
+        if(n.length()==1)
+            return n;
+        else
+        {
+            int csum=0;
+            for(int i=0;i<n.length();i++)
+            {
+                csum+=Character.getNumericValue(n.charAt(i));
+            }
+            //checck parent digit of csum
+            return parent_digit(Integer.toString(csum));
+        }
+    }
+    
+    static int parent_digit1(int ns){
+        int sum=0;
+        //if less than 10 return ns 
+        if(ns/10==0)
+            return ns;
+        else{
+            while(ns>0)
+            {
+                sum+=ns%10;
+                ns/=10;
+            }
+          }
+        return parent_digit1(sum);
+    }
+
+    public static void main(String[] args) {
+        /* Enter your code here. Read input from STDIN. Print output to STDOUT. Your class should be named Solution. */
+        Scanner sc=new Scanner(System.in);
+        String n=sc.next();
+        int k=sc.nextInt();
+        int psum=Integer.parseInt(parent_digit(n));
+        psum=psum*k;
+        System.out.println(parent_digit1(psum));
+    }
+}
