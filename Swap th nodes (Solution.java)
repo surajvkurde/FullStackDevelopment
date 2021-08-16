@@ -1,0 +1,72 @@
+/*
+You are given a linked list, we have to swap every two consequent nodes and return the starting node after swapping, i.e., head and print the linked list. Values shouldn't be swapped, only nodes should be swapped. Suppose linked list is like 4->5->6->7->8 After swapping, it will look like 5->4->7->6->8
+
+Input Format
+
+    Input n, the no. of nodes in the linked list
+    Next line inputs the value of the nodes of the linked list
+
+Constraints
+
+0<=n<=200 1<=nodeValue<=1000
+*/
+
+import java.io.*;
+import java.util.*;
+  class Node
+    {
+    int val;
+    Node next;
+    Node(int v)
+    {
+        val=v;
+        next=null;
+    }
+    }
+
+public class Solution {
+  
+    
+    static Node swap(Node head1,int nn)
+    {
+        if(head1.next==null)
+            return head1;
+        Node h1=head1;
+        //Node n1=head1.next;
+        while(h1!=null && h1.next!=null)
+        {
+            int temp=h1.val;
+            h1.val=h1.next.val;
+            h1.next.val=temp;
+            h1=h1.next.next;
+        }            
+        return head1;
+    }
+    
+    public static void main(String[] args) {
+        /* Enter your code here. Read input from STDIN. Print output to STDOUT. Your class should be named Solution. */
+        Scanner sc=new Scanner(System.in);
+        int n=sc.nextInt();
+        Node head=null,tail=null;
+        for(int i=0;i<n;i++)
+        {
+            int v=sc.nextInt();
+            if(head==null)
+            {
+                head=new Node(v);
+                tail=head;
+            }
+            else
+            {
+                tail.next=new Node(v);
+                tail=tail.next;
+            }            
+        }
+        Node node=swap(head,n);
+        while(node!=null)
+        {
+            System.out.print(node.val+" ");
+            node=node.next;
+        }
+    }
+}
