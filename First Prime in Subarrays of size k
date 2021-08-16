@@ -1,0 +1,85 @@
+/*
+You are given an array arr of positive integers and an integer K. Your task is to find the first prime number in all of the subarrays of size K. If there is no prime number in the subarray of size K, print 0.
+
+Example
+
+Input
+
+N=5 K=2
+
+arr [] = {2, 4, 4, 5, 7}
+
+Output
+
+2 0 5 5
+
+As the subarrays of size 2 are {2,4}, {4,4}, {4,5} and {5,7}.
+
+Expected Time Complexity = O(n√n)
+
+Expected Space Complexity = O(n)
+
+Input Format
+
+The first line contains 2 integers N and K, the size of the array and the size of the subarrays to be made respectively.
+
+The second line contains N spaced positive integers, the elements of the array.
+*/
+
+import java.io.*;
+import java.util.*;
+
+public class Solution {
+
+    static boolean is_prime(int k){
+        int count=0;
+        for(int i=1;i<=k;i++)
+        {
+            if(k%i==0)
+                count++;
+        }
+        if(count==2)
+            return true;
+        return false;
+    }
+    public static void main(String[] args) {
+        /* Enter your code here. Read input from STDIN. Print output to STDOUT. Your class should be named Solution. */
+        Scanner sc=new Scanner(System.in);
+        int n=sc.nextInt();
+        int k=sc.nextInt();
+        int arr[]=new int[n];
+        for(int i=0;i<n;i++)
+            arr[i]=sc.nextInt();
+        
+        HashMap<Integer,Integer> pmap=new HashMap<>();
+        for(int i=0;i<n;i++)
+        {
+            if(is_prime(arr[i]))
+                pmap.put(arr[i],1);
+            else
+                pmap.put(arr[i],0);
+        }
+        int pset[]=new int[n-k+1];
+        int l;
+        for(int i=0;i<n-k+1;i++)
+        {
+            l=i;
+            boolean found=false;
+            while(l<i+k)
+            {
+                if(pmap.get(arr[l])==1)
+                {
+                    pset[i]=arr[l];
+                    found=true;
+                    break;
+                }
+                l++;
+            }
+            if(!found)
+                pset[i]=0;
+        }
+        for(int i=0;i<pset.length;i++)
+            System.out.print(pset[i]+" ");
+        
+    }
+}
